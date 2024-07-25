@@ -1,9 +1,15 @@
+output "vm_names" {
+  value = hcloud_server.server.*.name
+  description = "VM names"
+}
+
+
 output "server_ipv4_addresses" {
-  value = [for s in hcloud_server.server : s.ipv4_address if s.ipv4_address != null]
-  description = "List of IPv4 addresses of the servers."
+  value = hcloud_server.server.*.ipv4_address
+  description = "Map of server names to their respective IPv4 addresses."
 }
 
 output "server_ipv6_addresses" {
-  value = [for s in hcloud_server.server : s.ipv6_address if s.ipv6_address != null]
-  description = "List of IPv6 addresses of the servers."
+  value = hcloud_server.server.*.ipv6_address
+  description = "Map of server names to their respective IPv6 addresses."
 }
