@@ -1,20 +1,38 @@
-# http-80 - Hcloud Firewall Terraform Module
+# Docker - Hcloud Server Terraform Module
 
-Allows inbound http (80) connections for a server on given Hcloud.
+Deploys docker inside of a Hcloud server
 
 ## Usage
 
 ``` terraform
-module "https" {
-  source  = "terraform-awesome-modules/hetzner-firewall/hcloud//modules/http-80"
-  version = "~>0.1.4"
+module docker {
+    
+     source  = "terraform-awesome-modules/hetzner-server/hcloud//modules/docker"
+     version = "~>0.1.2"
 
-    source_ips = ["0.0.0.0/0"]
+    server_name = ["test1"]
+    server_type = ["cx22"]
+    location    = ["fsn1"]
+    network = {
+
+        public_net = {
+            ipv4_enabled = true
+            ipv6_enabled = false
+        }
+     
+    }
 }
 
+output "docker_server_ipv4_addresses" {
+  value = module.docker.server_ipv4_addresses
+}
+
+output "docker_server_ipv6_addresses" {
+  value = module.docker.server_ipv6_addresses
+}
 ```
 
-All automatic values for http-80 module is using are available here.
+All automatic values for docker module is using are available here.
 
 ## Requirements
 
