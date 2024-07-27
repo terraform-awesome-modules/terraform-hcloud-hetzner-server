@@ -1,0 +1,13 @@
+#cloud-config
+apt_update: true
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+
+runcmd:
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sh get-docker.sh
+  - usermod -aG docker $USER
+  - systemctl enable --now docker
