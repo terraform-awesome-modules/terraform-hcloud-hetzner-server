@@ -34,7 +34,6 @@ variable "network" {
       network_id = string
       ip         = string
     }))
-    firewall_ids = list(string)
   })
   default = {
     public_net = {
@@ -42,9 +41,14 @@ variable "network" {
       ipv6_enabled = false
     }
     private_net = []
-    firewall_ids = [] 
   }
   description = "networking configuration for the Hetzner cloud server."
+}
+
+variable "firewall_ids" {
+  type = list(number)
+  default = []
+  description = "Firewall IDs the server should be attached to on creation."
 }
 
 variable "backups" {
@@ -55,6 +59,17 @@ variable "backups" {
 
 variable "user_data" {
   type        = string
-  default     = ""
-  description = "path to the cloud-init file."
+  default     = "" 
+  description = "Path to a cloud-init user data file. Leave empty if not used."
+}
+
+variable "volumes" {
+  type = map(object({
+    size        = number       // Volume size in GB
+    name        = string       // Suffix to append to server name for volume naming
+    format      = string       // File system format
+    automount   = bool         // Whether to automount the volume
+  }))
+  default = {}
+  description = "List of volume configurations to attach to each server."
 }
